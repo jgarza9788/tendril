@@ -29,7 +29,7 @@ checked and what is left.
 ## Housekeeping
 18. [x] **Search across everything.** One search returns artists, albums, playlists and tracks, grouped in that order and tagged by type. *Checked live.*
 19. [x] **Config file.** `~/.config/tendril/config.json`: volume, scrobbling, MPRIS, theme, accent and rebindable keys. *Checked live (volume, theme, accent, a custom key). Unknown keys are reported on startup.*
-20. [ ] **Packaging.** Done: `./build.sh release` (tarball), `--version`/`--help`, MIT license, `packaging/arch/PKGBUILD`, a GitHub Actions workflow. *The PKGBUILD has not been built with `makepkg` and the workflow has not run yet.*
+20. [x] **Packaging.** `./build.sh release` (tarball), `--version`/`--help`, MIT license, a GitHub Actions workflow, `packaging/arch/PKGBUILD`, and the first commit on GitHub (https://github.com/jgarza9788/tendril). *CI is verified: its first run type-checked, tested, built and smoke-tested green. **The PKGBUILD has not been built with `makepkg`**, and it points at a `v0.1.0` tag that has not been created yet, so it will not build until that tag exists.*
 
 ## Known gaps
 - Tested against one real server (Jellyfin 12.4) and a mock. Other versions are untested.

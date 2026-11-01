@@ -172,8 +172,8 @@ jobs. They don't need a server or mpv (one test spawns `curl` against a closed p
 
 ## Status
 
-Tested against a Jellyfin 12.4 server and the mock server. Other versions are untested. The
-Arch package and the CI workflow are new and may need a tweak.
+Tested against a Jellyfin 12.4 server and the mock server. Other versions are untested. CI
+(type-check, tests, build) runs on every push. The Arch package has not been built yet.
 
 ## License
 
