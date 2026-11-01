@@ -1,0 +1,3 @@
+[submodule "libs/hnoss"]
+	path = libs/hnoss
+	url = https://github.com/Huseynteymurzade28/hnoss

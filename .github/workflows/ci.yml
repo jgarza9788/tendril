@@ -1,0 +1,29 @@
+name: ci
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - name: Install Odin
+        uses: laytan/setup-odin@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install runtime tools
+        # curl is used by the worker-thread tests; mpv is only needed to run the app
+        run: sudo apt-get update && sudo apt-get install -y curl mpv
+      - name: Type-check
+        run: ./build.sh check
+      - name: Test
+        run: ./build.sh test
+      - name: Build
+        run: ./build.sh build
+      - name: Smoke test
+        run: ./bin/tendril --version
