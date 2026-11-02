@@ -1,6 +1,6 @@
 # Maintainer: Justin Garza <jgarza9788@gmail.com>
 pkgname=tendril
-pkgver=0.1.0
+pkgver=0.1.1
 pkgrel=1
 pkgdesc="A Jellyfin music player for the terminal"
 arch=('x86_64')
