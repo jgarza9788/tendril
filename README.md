@@ -21,7 +21,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/jgarza9788/tendril/releases/download/v0.1.0/Tendril-demo.mp4"><b>▶ Watch the 72-second demo (with sound)</b></a>
+  <a href="https://www.youtube.com/watch?v=tt09Wfxf2_8"><b>▶ Watch the 72-second demo on YouTube</b></a><br>
+  <sub>or <a href="https://github.com/jgarza9788/tendril/releases/download/v0.1.0/Tendril-demo.mp4">download the MP4</a></sub>
 </p>
 
 ---
