@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="packaging/tendril.svg" width="120" alt="Tendril, a glowing jellyfish">
+  <img src="packaging/tendril.svg" width="120" alt="Tendril: a play button inside a curling tendril">
 </p>
 
 <h1 align="center">tendril</h1>
