@@ -12,6 +12,7 @@ pkgbase = tendril
 	depends = curl
 	optdepends = pipewire-pulse: a real audio spectrum in the visualizer (parec and pactl)
 	optdepends = playerctl: control Tendril from the command line
+	options = !debug
 	source = tendril::git+https://github.com/jgarza9788/tendril.git#tag=v0.1.0
 	source = hnoss::git+https://github.com/Huseynteymurzade28/hnoss.git#commit=b1ae30f39ab0f972c90b408dc2247eb6a08bac20
 	sha256sums = SKIP

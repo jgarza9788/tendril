@@ -8,6 +8,7 @@ url="https://github.com/jgarza9788/tendril"
 license=('MIT')
 depends=('mpv' 'curl')
 makedepends=('git' 'odin' 'clang')
+options=('!debug')
 optdepends=('pipewire-pulse: a real audio spectrum in the visualizer (parec and pactl)'
             'playerctl: control Tendril from the command line')
 # hnoss (the TUI library) has no releases: this is the commit Tendril was built and tested with.

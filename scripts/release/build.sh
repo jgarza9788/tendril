@@ -34,6 +34,7 @@ mkdir -p "$work/$src"
 git archive --format=tar "$commit" | tar -x -C "$work/$src"
 hnoss="$(git ls-tree "$commit" libs/hnoss | awk '{print $3}')"      # the commit the submodule is pinned to
 git -C libs/hnoss archive --format=tar "$hnoss" | tar -x -C "$work/$src/libs/hnoss"
+rm -rf "$work/$src/libs/hnoss/docs"            # hnoss's own web docs (12 MB); not needed to build
 stamp="$(git show -s --format=%ct "$commit")"
 tar -C "$work" --sort=name --owner=0 --group=0 --numeric-owner --mtime="@$stamp" -czf "$out/$src.tar.gz" "$src"
 
