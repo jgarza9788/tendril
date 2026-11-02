@@ -29,9 +29,9 @@ checked and what is left.
 ## Housekeeping
 18. [x] **Search across everything.** One search returns artists, albums, playlists and tracks, grouped in that order and tagged by type. *Checked live.*
 19. [x] **Config file.** `~/.config/tendril/config.json`: volume, scrobbling, MPRIS, theme, accent and rebindable keys. *Checked live (volume, theme, accent, a custom key). Unknown keys are reported on startup.*
-20. [x] **Packaging.** `./build.sh release` (tarball), `--version`/`--help`, MIT license, a GitHub Actions workflow, `packaging/arch/PKGBUILD`, and the first commit on GitHub (https://github.com/jgarza9788/tendril). *CI is verified: its first run type-checked, tested, built and smoke-tested green. **The PKGBUILD has not been built with `makepkg`**, and it points at a `v0.1.0` tag that has not been created yet, so it will not build until that tag exists.*
+20. [x] **Packaging.** Released as **v0.1.0 "Moon Jelly" (Beta)**: https://github.com/jgarza9788/tendril/releases/tag/v0.1.0. Files: a static AppImage, a static tarball with `install.sh`, an Arch package (`makepkg` runs the unit tests), the source with hnoss included, `SHA256SUMS`, and the demo film. Built by `scripts/release/build.sh`, published by `scripts/release/publish.sh` (see `docs/RELEASING.md`). *Checked: the tarball and AppImage run on Debian 12 and Ubuntu 22.04 (glibc 2.36 / 2.35), and a full login, browse and play session works on Ubuntu 22.04; downloaded assets match the published checksums; the AUR `PKGBUILD` builds from the tag. **Not done:** submitting to the AUR, and a physical media-key press.*
 
 ## Known gaps
-- Tested against one real server (Jellyfin 12.4) and a mock. Other versions are untested.
+- Tested against one real server (Jellyfin 12.4) and a mock. Other versions are untested. Only run on Arch Linux with Hyprland.
 - Ratings, unsynced-lyric scrolling, animated list scrolling, and a measured ReplayGain check are the open items above.
 - The visualizer listens to mpv's stream, so it needs PipeWire/PulseAudio tools to be real.
