@@ -1,0 +1,43 @@
+# Maintainer: Justin Garza <jgarza9788@gmail.com>
+pkgname=tendril
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="A Jellyfin music player for the terminal"
+arch=('x86_64')
+url="https://github.com/jgarza9788/tendril"
+license=('MIT')
+depends=('mpv' 'curl')
+makedepends=('git' 'odin' 'clang')
+optdepends=('pipewire-pulse: a real audio spectrum in the visualizer (parec and pactl)'
+            'playerctl: control Tendril from the command line')
+# hnoss (the TUI library) has no releases: this is the commit Tendril was built and tested with.
+_hnoss=b1ae30f39ab0f972c90b408dc2247eb6a08bac20
+source=("$pkgname::git+$url.git#tag=v$pkgver"
+        "hnoss::git+https://github.com/Huseynteymurzade28/hnoss.git#commit=$_hnoss")
+sha256sums=('SKIP' 'SKIP')
+
+prepare() {
+  cd "$pkgname"
+  rm -rf libs/hnoss
+  cp -r "$srcdir/hnoss" libs/hnoss
+}
+
+build() {
+  cd "$pkgname"
+  odin build src -vet -strict-style -warnings-as-errors -o:speed \
+    -define:TENDRIL_VERSION="$pkgver" -out:tendril-bin
+}
+
+check() {
+  cd "$pkgname"
+  ./build.sh test
+}
+
+package() {
+  cd "$pkgname"
+  install -Dm755 tendril-bin "$pkgdir/usr/bin/tendril"
+  install -Dm644 packaging/tendril.desktop "$pkgdir/usr/share/applications/tendril.desktop"
+  install -Dm644 packaging/tendril.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/tendril.svg"
+  install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}

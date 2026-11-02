@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Tendril
+GenericName=Jellyfin music player
+Comment=A Jellyfin music player for the terminal
+Exec=tendril
+Icon=tendril
+Terminal=true
+Categories=AudioVideo;Audio;Player;ConsoleOnly;
+Keywords=jellyfin;music;player;terminal;tui;mpris;

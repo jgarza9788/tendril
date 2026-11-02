@@ -220,6 +220,8 @@ draw :: proc(app: ^App, ui: ^hnoss.Ui, f: ^hnoss.Frame) {
 	show_queue   := wide || (app.center == .Queue && !app.lyrics_open)
 	if !app.dlg_open && !app.help_open && !app.save_open {
 		order := make([dynamic]rawptr, context.temp_allocator)
+		// first, so it wins: while lyrics are open no list behind them should look focused
+		if app.lyrics_open { append(&order, &app.lyric_scroll) }
 		if v != nil && show_browser {
 			if v.kind == .Search && len(app.stack) == 1 { append(&order, &app.search) }
 			append(&order, &v.list)
@@ -533,15 +535,16 @@ draw_lyrics :: proc(app: ^App, ui: ^hnoss.Ui, r: hnoss.Rect) {
 		if idx < 0 || idx >= len(lines) { continue }
 		text := lines[idx].text
 		if text == "" { continue }
+		if synced && idx == cur { text = fmt.tprintf("♪  %s  ♪", text) }
 		x := inner.x + max((inner.width - utf8.rune_count_in_string(text)) / 2, 0)
 		col: style.Rgb
 		bold := false
 		switch {
 		case !synced:    col = FOAM
-		case idx == cur: col, bold = style.lerp_rgb(GLOW[1], FOAM, 0.25), true
+		case idx == cur: col, bold = style.lerp_rgb(GLOW[1], FOAM, 0.2), true
 		case:
-			d := f64(abs(idx - cur)) / 6
-			col = style.lerp_rgb(MIST, ABYSS, clamp(d, 0, 0.85))
+			d := f64(abs(idx - max(cur, 0))) / 9 // before the first timestamp, fade from the top line
+			col = style.lerp_rgb(FOAM, ABYSS, clamp(0.38 + d * 0.5, 0, 0.82))
 		}
 		buffer.set_string(ui.buf, x, inner.y + row, text, style.Style{fg = col, add = bold ? {.Bold} : {}}, inner.width)
 	}

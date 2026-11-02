@@ -4,7 +4,7 @@
 #   test     unit tests (tests/ and src/)
 #   build    optimised binary in bin/tendril
 #   run      build and launch
-#   release  dist/tendril-<version>-linux-x86_64.tar.gz
+#   release  every release file, into dist-release/v<version>/ (scripts/release/build.sh)
 #   track    bin/tendril-track: a build that prints a memory-leak report on exit
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -20,12 +20,6 @@ case "${1:-build}" in
 	build) "$ODIN" build src "${FLAGS[@]}" -o:speed -define:TENDRIL_VERSION="$VERSION" -out:bin/tendril ;;
 	run)   "$ODIN" run src "${FLAGS[@]}" -o:speed -define:TENDRIL_VERSION="$VERSION" -out:bin/tendril ;;
 	track) "$ODIN" build src "${FLAGS[@]}" -o:speed -define:TENDRIL_TRACK=true -define:TENDRIL_VERSION="$VERSION" -out:bin/tendril-track ;;
-	release)
-		"$ODIN" build src "${FLAGS[@]}" -o:speed -define:TENDRIL_VERSION="$VERSION" -out:bin/tendril
-		name="tendril-$VERSION-linux-x86_64"
-		rm -rf "dist/$name"; mkdir -p "dist/$name"
-		cp bin/tendril README.md LICENSE "dist/$name/"
-		tar -C dist -czf "dist/$name.tar.gz" "$name"
-		echo "dist/$name.tar.gz" ;;
+	release) exec scripts/release/build.sh "${@:2}" ;;
 	*)     echo "unknown command: $1" >&2; exit 1 ;;
 esac

@@ -1,40 +1,36 @@
 # Maintainer: Justin Garza <jgarza9788@gmail.com>
+# Built by scripts/release/build.sh, from the source tarball it makes (which already holds
+# hnoss). Not for the AUR: see ../aur/PKGBUILD for that one.
 pkgname=tendril
 pkgver=0.1.0
 pkgrel=1
-pkgdesc='A Jellyfin music player for the terminal, built with hnoss'
+pkgdesc="A Jellyfin music player for the terminal"
 arch=('x86_64')
-url='https://github.com/jgarza9788/tendril'
+url="https://github.com/jgarza9788/tendril"
 license=('MIT')
 depends=('mpv' 'curl')
-optdepends=('pipewire-pulse: real audio spectrum in the visualizer (parec, pactl)'
-            'playerctl: control Tendril from the command line or media keys')
-makedepends=('odin' 'clang' 'git')
-source=("$pkgname::git+https://github.com/jgarza9788/tendril.git#tag=v$pkgver"
-        "hnoss::git+https://github.com/Huseynteymurzade28/hnoss.git")
-# hnoss has no tagged releases: pin the commit you built against by replacing SKIP.
-sha256sums=('SKIP' 'SKIP')
-
-prepare() {
-  cd "$pkgname"
-  rm -rf libs/hnoss
-  cp -r "$srcdir/hnoss" libs/hnoss
-}
+makedepends=('odin' 'clang')
+optdepends=('pipewire-pulse: a real audio spectrum in the visualizer (parec and pactl)'
+            'playerctl: control Tendril from the command line')
+source=("$pkgname-$pkgver.tar.gz")
+sha256sums=('SKIP')
 
 build() {
-  cd "$pkgname"
+  cd "$pkgname-$pkgver"
   odin build src -vet -strict-style -warnings-as-errors -o:speed \
     -define:TENDRIL_VERSION="$pkgver" -out:tendril-bin
 }
 
 check() {
-  cd "$pkgname"
+  cd "$pkgname-$pkgver"
   ./build.sh test
 }
 
 package() {
-  cd "$pkgname"
+  cd "$pkgname-$pkgver"
   install -Dm755 tendril-bin "$pkgdir/usr/bin/tendril"
+  install -Dm644 packaging/tendril.desktop "$pkgdir/usr/share/applications/tendril.desktop"
+  install -Dm644 packaging/tendril.svg "$pkgdir/usr/share/icons/hicolor/scalable/apps/tendril.svg"
   install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
   install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }

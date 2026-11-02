@@ -1,0 +1,21 @@
+#!/bin/sh
+# Starts Tendril. It is a terminal program, so when the AppImage is opened from a file
+# manager (no terminal attached) this first looks for a terminal emulator to run it in.
+here="$(dirname "$(readlink -f "$0")")"
+self="${APPIMAGE:-$here/usr/bin/tendril}"
+
+# Asking for the version or help never needs a terminal, and neither does a real one.
+if [ $# -gt 0 ] || { [ -t 0 ] && [ -t 1 ]; }; then
+    exec "$here/usr/bin/tendril" "$@"
+fi
+
+for term in "${TERMINAL:-}" foot alacritty kitty ghostty wezterm konsole xfce4-terminal gnome-terminal tilix xterm; do
+    [ -n "$term" ] && command -v "$term" >/dev/null 2>&1 || continue
+    case "$(basename "$term")" in
+        gnome-terminal|xfce4-terminal|tilix) exec "$term" -- "$self" ;;
+        wezterm)                              exec "$term" start -- "$self" ;;
+        *)                                    exec "$term" -e "$self" ;;
+    esac
+done
+echo "Tendril is a terminal program, and no terminal emulator was found. Run this file from a terminal." >&2
+exit 1
